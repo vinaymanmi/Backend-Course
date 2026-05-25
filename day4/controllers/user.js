@@ -1,11 +1,13 @@
 const User=require("../models/user");
+const bcrypt=require("bcrypt")
 
 const createAccount=async(req,res) => {
 
     try {
-        const {name,email,password} = req.body
+        const {name,email,password} = req.body;
+        const hashpassword=await bycript.hash(password,12)
         const userdata=await User.create({
-            name,email,password
+            name,email,password: hashpassword
         })
         res.json({
             message:"Account created successfuly",
@@ -21,8 +23,9 @@ const login=async (req,res) => {
     try {
         const {email,password}=req.body;
         const userdata = await User.findOne({email});
-        if(!userdata){
-            throw new Error("User not found");
+        const hashpassword= await bcrypt.compare(password,userdata.password); 
+        if (!hashpassword) {
+            throw new Error("user is not found");
         }
         if(userdata.password != password){
             throw new Error("Password is invalid");
