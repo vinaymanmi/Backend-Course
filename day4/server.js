@@ -8,13 +8,16 @@ require("dotenv").config()
 const port=process.env.port;
 const mongo_url=process.env.mongo_url;
 
-const {createAccount,login}=require("./controllers/user")
+const {createAccount,login}=require("./controllers/user");
+const { createNotebook,getNotes} = require("./controllers/notes");
 
 
 app.use(express.json());
 
 app.post("/signin",createAccount);
 app.post("/login",login);
+app.post("/notebook",createNotebook);
+app.get("/allNotes",getNotes);
 
 mongoose.connect(mongo_url)
 .then(()=>{

@@ -1,4 +1,4 @@
-const User=require("../models/user"); //calling a package=> . => inside current folder, ..=>ouside current folder
+const User=require("../models/user");
 
 const createAccount=async(req,res) => {
 
