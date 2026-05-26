@@ -48,7 +48,7 @@ const deleteNotebook= async (req,res) => {
         const id=req.params.id;
         const notes=await notebook.findByIdAndDelete(id);
         if(!notes){
-            return res.send("Notebook not found");
+            return res.status(401).send("Notebook not found");
         }
         res.send("Notebook is deleted");
     } catch (e) {

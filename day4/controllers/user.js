@@ -1,10 +1,16 @@
 const User=require("../models/user");
 const bcrypt=require("bcrypt");
+require("dotenv").config();
+const jwt=require("jsonwebtoken")
 
 const createAccount=async(req,res) => {
 
     try {
         const {name,email,password} = req.body;
+        const cheackUser=await User.findOne({email})
+        if(cheackUser){
+            return res.status(401).send("Email is already exist please login")
+        }
         const hashpassword=await bcrypt.hash(password,12)
         const userdata=await User.create({
             name,
@@ -32,9 +38,18 @@ const login=async (req,res) => {
         if(userdata.password != password){
             throw new Error("Password is invalid");
         }
+
+        const token=await jwt.sign(
+            {id:userdata._id},
+            process.env.secret_key,
+            {expiresIn:"10h"}
+        )
+        
+
         res.json({
             message: "Welcome",
-            userdata
+            userdata,
+            token:token
         })
     } catch (e) {
         res.send(e.message);
