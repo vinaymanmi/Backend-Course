@@ -1,16 +1,18 @@
 const User=require("../models/user");
-const bcrypt=require("bcrypt")
+const bcrypt=require("bcrypt");
 
 const createAccount=async(req,res) => {
 
     try {
         const {name,email,password} = req.body;
-        const hashpassword=await bycript.hash(password,12)
+        const hashpassword=await bcrypt.hash(password,12)
         const userdata=await User.create({
-            name,email,password: hashpassword
+            name,
+            email,
+            password: hashpassword
         })
         res.json({
-            message:"Account created successfuly",
+            message:"Account created successfuly", 
             userdata
         })
     } catch (e) {
