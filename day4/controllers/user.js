@@ -35,9 +35,9 @@ const login=async (req,res) => {
         if (!hashpassword) {
             throw new Error("user is not found");
         }
-        if(userdata.password != password){
-            throw new Error("Password is invalid");
-        }
+        // if(userdata.password != password){    //comapre with user passowrd and hash password,, not nessary
+        //     throw new Error("Password is invalid");
+        // } 
 
         const token=await jwt.sign(
             {id:userdata._id},

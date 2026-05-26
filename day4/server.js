@@ -10,14 +10,15 @@ const mongo_url=process.env.mongo_url;
 
 const {createAccount,login}=require("./controllers/user");
 const { createNotebook,getNotes,updateNotebook,deleteNotebook} = require("./controllers/notes");
+const auth=require("./middleware/auth");
 
 
 app.use(express.json());
 
 app.post("/signin",createAccount);
 app.post("/login",login);
-app.post("/notebook",createNotebook); //POST for send data
-app.get("/allNotes",getNotes);  //GET for getting/showing data
+app.post("/notebook",auth,createNotebook); //POST for send data
+app.get("/allNotes",auth,getNotes);  //GET for getting/showing data
 //PUT for Updateing data
 app.put("/updatenotebook/:id",updateNotebook);
 
