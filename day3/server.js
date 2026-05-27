@@ -35,8 +35,6 @@ app.get("/path",(request,responce)=>{
     responce.send("path api");
 });
 
-
-
 // app.get("/login",(req,res)=>{
 //     const userdata=req.body;
 //     console.log(userdata);
